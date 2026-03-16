@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   Instagram,
   MapPin,
@@ -127,13 +127,55 @@ const locations = {
     address: 'Estr. do Pau-Ferro, 522',
     phone: '(21) 96489-5330',
     hours: 'Seg-Qui: 17h-00h | Sex-Sáb: 17h-02h | Dom: 12h-00h',
+    schedule: {
+      0: [{ start: 12 * 60, end: 24 * 60 }],
+      1: [{ start: 17 * 60, end: 24 * 60 }],
+      2: [{ start: 17 * 60, end: 24 * 60 }],
+      3: [{ start: 17 * 60, end: 24 * 60 }],
+      4: [{ start: 17 * 60, end: 24 * 60 }],
+      5: [{ start: 17 * 60, end: 26 * 60 }],
+      6: [{ start: 17 * 60, end: 26 * 60 }],
+    },
   },
   vista_alegre: {
     name: 'Vista Alegre',
     address: 'Av. Brás de Pina, 2604',
     phone: '(21) 96489-5330',
     hours: 'Seg-Qui: 17h-00h | Sex-Sáb: 17h-02h | Dom: 12h-00h',
+    schedule: {
+      0: [{ start: 12 * 60, end: 24 * 60 }],
+      1: [{ start: 17 * 60, end: 24 * 60 }],
+      2: [{ start: 17 * 60, end: 24 * 60 }],
+      3: [{ start: 17 * 60, end: 24 * 60 }],
+      4: [{ start: 17 * 60, end: 24 * 60 }],
+      5: [{ start: 17 * 60, end: 26 * 60 }],
+      6: [{ start: 17 * 60, end: 26 * 60 }],
+    },
   },
+};
+
+const isLocationOpenNow = (schedule) => {
+  const nowInSaoPaulo = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
+  const day = nowInSaoPaulo.getDay();
+  const minutesNow = nowInSaoPaulo.getHours() * 60 + nowInSaoPaulo.getMinutes();
+
+  const todayRanges = schedule?.[day] ?? [];
+  const isOpenToday = todayRanges.some((range) => {
+    if (range.end <= 24 * 60) {
+      return minutesNow >= range.start && minutesNow < range.end;
+    }
+
+    return minutesNow >= range.start;
+  });
+
+  if (isOpenToday) {
+    return true;
+  }
+
+  const previousDay = (day + 6) % 7;
+  const previousDayRanges = schedule?.[previousDay] ?? [];
+
+  return previousDayRanges.some((range) => range.end > 24 * 60 && minutesNow < range.end - 24 * 60);
 };
 
 const WORDS = ['da comida brasileira', 'da comida oriental', 'dos espetinhos'];
@@ -179,8 +221,8 @@ const Carousel = ({ title, subtitle, images }) => {
           <h3 className="text-3xl md:text-5xl font-black text-white">{title}</h3>
         </div>
         <div className="hidden md:flex space-x-2">
-          <button onClick={() => scroll('left')} className="p-3 bg-white/5 hover:bg-green-600 rounded-full border border-white/10 transition-all"><ChevronLeft size={24} /></button>
-          <button onClick={() => scroll('right')} className="p-3 bg-white/5 hover:bg-green-600 rounded-full border border-white/10 transition-all"><ChevronRight size={24} /></button>
+          <button onClick={() => scroll('left')} className="cursor-pointer p-3 bg-white/5 hover:bg-green-600 rounded-full border border-white/10 transition-all"><ChevronLeft size={24} /></button>
+          <button onClick={() => scroll('right')} className="cursor-pointer p-3 bg-white/5 hover:bg-green-600 rounded-full border border-white/10 transition-all"><ChevronRight size={24} /></button>
         </div>
       </div>
       <div ref={scrollRef} className="flex overflow-x-auto space-x-6 px-6 md:px-[10%] pb-8 scrollbar-hide snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
@@ -216,6 +258,11 @@ const App = () => {
   const [text, setText] = useState('');
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const locationStatus = useMemo(
+    () => Object.fromEntries(Object.entries(locations).map(([key, location]) => [key, isLocationOpenNow(location.schedule)])),
+    []
+  );
 
   useEffect(() => {
     let timer;
@@ -340,7 +387,7 @@ const App = () => {
                   </div>
                 </div>
               </div>
-              <button onClick={() => setIsChatActive(false)} className="text-white/80 hover:text-white bg-black/10 p-2 rounded-full"><X size={20} /></button>
+              <button onClick={() => setIsChatActive(false)} className="cursor-pointer text-white/80 hover:text-white bg-black/10 p-2 rounded-full"><X size={20} /></button>
             </div>
             <div className="p-5 h-[320px] overflow-y-auto flex flex-col gap-3 relative z-10 scrollbar-hide">
               <div className="absolute inset-0 opacity-[0.08] bg-[url('https://i.ibb.co/6H9PqQK/bg-whatsapp.png')] bg-repeat mix-blend-multiply z-0"></div>
@@ -360,7 +407,7 @@ const App = () => {
           </div>
         </div>
 
-        <button onClick={handleOpenChat} className={`flex items-center justify-center w-16 h-16 md:w-[72px] md:h-[72px] rounded-full shadow-2xl transition-all duration-500 relative z-50 group ${isChatActive ? 'bg-stone-800 text-white rotate-90 scale-90' : 'bg-[#25D366] text-white hover:scale-105'}`}>
+        <button onClick={handleOpenChat} className={`cursor-pointer flex items-center justify-center w-16 h-16 md:w-[72px] md:h-[72px] rounded-full shadow-2xl transition-all duration-500 relative z-50 group ${isChatActive ? 'bg-stone-800 text-white rotate-90 scale-90' : 'bg-[#25D366] text-white hover:scale-105'}`}>
           {isChatActive ? <X size={32} /> : <><MessageCircle size={36} className="relative z-10" /><div className="absolute inset-0 bg-white/20 scale-0 group-hover:scale-100 rounded-full transition-transform duration-500"></div></>}
           {!isChatActive && chatStep === 0 && <span className="absolute top-0 right-0 flex h-4 w-4 -mt-0.5 -mr-0.5"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span><span className="relative inline-flex rounded-full h-full w-full bg-red-500 border-[2.5px] border-[#050505]"></span></span>}
         </button>
@@ -375,19 +422,19 @@ const App = () => {
             {navLinks.map((link, i) => (
               <a key={i} href={link.href || '#'} onClick={(e) => { if (link.action) { e.preventDefault(); link.action(); } }} className="hover:text-green-400 transition-colors">{link.label}</a>
             ))}
-            <button className="bg-green-600 hover:bg-green-500 text-white px-8 py-3 rounded-full transition-all text-[10px] font-black tracking-widest shadow-lg shadow-green-900/40">RESERVAS</button>
+            <button className="cursor-pointer bg-green-600 hover:bg-green-500 text-white px-8 py-3 rounded-full transition-all text-[10px] font-black tracking-widest shadow-lg shadow-green-900/40">RESERVAS</button>
           </div>
-          <button className="lg:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>{isMenuOpen ? <X size={32} /> : <MenuIcon size={32} />}</button>
+          <button className="cursor-pointer lg:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>{isMenuOpen ? <X size={32} /> : <MenuIcon size={32} />}</button>
         </div>
       </nav>
 
       {isMenuOpen && (
         <div className="fixed inset-0 z-[110] bg-black flex flex-col items-center justify-center space-y-10 text-3xl font-black tracking-tighter">
-          <button className="absolute top-8 right-8" onClick={() => setIsMenuOpen(false)}><X size={40} /></button>
+          <button className="cursor-pointer absolute top-8 right-8" onClick={() => setIsMenuOpen(false)}><X size={40} /></button>
           {navLinks.map((link, i) => (
             <a key={i} href={link.href || '#'} onClick={() => { setIsMenuOpen(false); if (link.action) link.action(); }}>{link.label}</a>
           ))}
-          <button className="bg-green-600 text-white px-12 py-4 rounded-full text-xl">RESERVAR</button>
+          <button className="cursor-pointer bg-green-600 text-white px-12 py-4 rounded-full text-xl">RESERVAR</button>
         </div>
       )}
 
@@ -411,45 +458,45 @@ const App = () => {
               </h1>
               <div className="flex flex-col sm:flex-row justify-center gap-6 mt-8">
                 <a href="#menu" className="bg-green-600 text-white px-12 py-5 rounded-full font-black text-lg hover:bg-green-500 transition-all shadow-2xl flex items-center group">CARDÁPIO <ChevronRight className="ml-2 group-hover:translate-x-1" /></a>
-                <button onClick={() => setCurrentPage('gallery')} className="bg-white/5 hover:bg-white/10 border border-white/10 px-12 py-5 rounded-full font-black text-lg transition-all flex items-center group">GALERIA <Camera className="ml-2 w-5 h-5" /></button>
+                <button onClick={() => setCurrentPage('gallery')} className="cursor-pointer bg-white/5 hover:bg-white/10 border border-white/10 px-12 py-5 rounded-full font-black text-lg transition-all flex items-center group">GALERIA <Camera className="ml-2 w-5 h-5" /></button>
               </div>
             </div>
           </section>
 
-          <section id="menu" className="py-32 container mx-auto px-6">
-            <div className="mb-20">
+          <section id="menu" className="py-16 md:py-32 container mx-auto px-6">
+            <div className="mb-10 md:mb-20">
               <h2 className="text-green-500 font-black tracking-widest text-sm mb-4 uppercase">Mix Gastronômico</h2>
               <h3 className="text-5xl md:text-7xl font-black text-white leading-none">Do Oriente à <br /> Brasa Carioca.</h3>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 h-[800px] md:h-[700px]">
-              <div className="md:col-span-7 relative rounded-[40px] overflow-hidden border border-white/5 group cursor-pointer">
-                <img src={images.sushi} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="Sushi" />
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:h-[700px]">
+              <div className="md:col-span-7 relative rounded-[40px] overflow-hidden border border-white/5 group cursor-pointer aspect-[4/3] md:aspect-auto">
+                <img src={images.sushi} className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-1000" alt="Sushi" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                <h4 className="absolute bottom-10 left-10 text-4xl font-black text-white uppercase tracking-tighter">Sushi Lounge</h4>
+                <h4 className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-2xl md:text-4xl font-black text-white uppercase tracking-tighter">Sushi Lounge</h4>
               </div>
-              <div className="md:col-span-5 grid grid-rows-3 md:grid-rows-2 gap-6">
-                <div className="md:row-span-1 relative rounded-[40px] overflow-hidden border border-white/5 group cursor-pointer">
+              <div className="md:col-span-5 grid grid-rows-2 gap-4 md:gap-6">
+                <div className="md:row-span-1 relative rounded-[40px] overflow-hidden border border-white/5 group cursor-pointer aspect-[4/3] md:aspect-auto">
                   <img src={images.steak} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="Parrilla" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                  <h4 className="absolute bottom-6 left-6 text-xl font-black text-white uppercase">Parrilla Argentina</h4>
+                  <h4 className="absolute bottom-5 left-5 md:bottom-6 md:left-6 text-lg md:text-xl font-black text-white uppercase">Parrilla Argentina</h4>
                 </div>
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="relative rounded-[40px] overflow-hidden border border-white/5 group cursor-pointer">
+                <div className="grid grid-cols-2 gap-4 md:gap-6">
+                  <div className="relative rounded-[40px] overflow-hidden border border-white/5 group cursor-pointer aspect-square md:aspect-auto">
                     <img src={images.drink_bento} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="Drink" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    <h4 className="absolute bottom-4 left-4 text-sm font-black text-white uppercase">Mixologia</h4>
+                    <h4 className="absolute bottom-3 left-3 md:bottom-4 md:left-4 text-[11px] md:text-sm font-black text-white uppercase">Mixologia</h4>
                   </div>
-                  <div className="relative rounded-[40px] overflow-hidden border border-white/5 group cursor-pointer">
+                  <div className="relative rounded-[40px] overflow-hidden border border-white/5 group cursor-pointer aspect-square md:aspect-auto">
                     <img src={images.sobremesa} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="Sobremesa" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    <h4 className="absolute bottom-4 left-4 text-sm font-black text-white uppercase">Sobremesas</h4>
+                    <h4 className="absolute bottom-3 left-3 md:bottom-4 md:left-4 text-[11px] md:text-sm font-black text-white uppercase">Sobremesas</h4>
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <section className="py-32 bg-[#080808] border-y border-white/5">
+          <section className="py-16 md:py-32 bg-[#080808] border-y border-white/5">
             <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
               <div className="rounded-[60px] overflow-hidden border border-white/10 shadow-2xl relative">
                 <img src={images.kids} className="w-full aspect-square object-cover" alt="Área Kids" />
@@ -496,13 +543,15 @@ const App = () => {
                   <div key={key} onClick={() => setActiveLocation(key)} className={`p-12 rounded-[50px] border transition-all cursor-pointer ${activeLocation === key ? 'bg-green-800/40 border-green-500 shadow-2xl' : 'bg-white/5 border-white/5 hover:border-white/20'}`}>
                     <div className="flex justify-between items-start mb-10">
                       <MapPin size={40} className={activeLocation === key ? 'text-white' : 'text-green-500'} />
-                      <div className="px-4 py-1 rounded-full text-[10px] font-black bg-white/10 uppercase">Aberto Agora</div>
+                      <div className={`px-4 py-1 rounded-full text-[10px] font-black uppercase ${locationStatus[key] ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'}`}>
+                        {locationStatus[key] ? 'Aberto Agora' : 'Fechado Agora'}
+                      </div>
                     </div>
                     <h4 className="text-4xl font-black mb-6 text-white">{loc.name}</h4>
                     <div className="space-y-4 opacity-80 mb-12 font-medium">
                       <p>{loc.address}</p><p>{loc.hours}</p>
                     </div>
-                    <button className={`w-full py-4 rounded-full font-black uppercase text-sm transition-all ${activeLocation === key ? 'bg-white text-green-700' : 'bg-green-600 text-white'}`}>Reservar Mesa</button>
+                    <button className={`cursor-pointer w-full py-4 rounded-full font-black uppercase text-sm transition-all ${activeLocation === key ? 'bg-white text-green-700' : 'bg-green-600 text-white'}`}>Reservar Mesa</button>
                   </div>
                 ))}
               </div>
@@ -520,7 +569,7 @@ const App = () => {
           </div>
           <Carousel title="Nossos Ambientes" subtitle="Descubra" images={spaceGallery} />
           <Carousel title="Nossa Gastronomia" subtitle="Sabor" images={foodGallery} />
-          <div className="text-center mt-20"><button onClick={() => { setCurrentPage('home'); window.scrollTo(0, 0); }} className="bg-white/5 hover:bg-white/10 hover:text-green-500 border border-white/10 px-12 py-4 rounded-full font-black text-sm uppercase">Voltar ao Início</button></div>
+          <div className="text-center mt-20"><button onClick={() => { setCurrentPage('home'); window.scrollTo(0, 0); }} className="cursor-pointer bg-white/5 hover:bg-white/10 hover:text-green-500 border border-white/10 px-12 py-4 rounded-full font-black text-sm uppercase">Voltar ao Início</button></div>
         </section>
       )}
 

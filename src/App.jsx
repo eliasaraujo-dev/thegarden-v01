@@ -40,6 +40,138 @@ const images = {
 };
 
 const LOGO_URL = 'https://i.ibb.co/PZk2znqf/469224574-588547160329262-8839946697425987304-n.png';
+const MENU_URL = 'https://drive.google.com/file/d/1SCSHF5bOwxmr2ao2gxHekw8OUjcIAcA1/view';
+const RESERVAS_URL = 'https://thegarden.com.br';
+
+const menuSections = [
+  {
+    title: 'Combinados & Sushi',
+    items: [
+      { name: 'Combinado 12 peças', price: 'R$ 47,90', description: '6 sashimis variados + 2 niguiris + 4 enrolados' },
+      { name: 'Combinado 14 peças (Salmão maçaricado)', price: 'R$ 66,90', description: '8 sashimis + 6 niguiris' },
+      { name: 'Combinado 18 peças', price: 'R$ 69,90', description: '8 sashimis variados + 6 niguiris + 4 enrolados' },
+      { name: 'Combinado 40 peças variadas', price: 'R$ 159,90' },
+      { name: 'Combinado 40 peças só salmão ou atum', price: 'R$ 169,90' },
+      { name: 'Combinado 50 peças variadas', price: 'R$ 189,90' },
+      { name: 'Combinado 50 peças só salmão ou atum', price: 'R$ 199,90', description: 'Shimeji cortesia nos combinados de 50 peças' },
+      { name: 'Niguiris (8 un) - Peixe branco / Salmão / Atum', price: 'R$ 34,90' },
+      { name: 'Sashimis (8 un) - Peixe branco / Salmão / Atum', price: 'R$ 25,90 a R$ 27,90' },
+      { name: 'Hot roll (10 un)', price: 'R$ 34,90 a R$ 39,90' },
+      { name: 'Temakis (com arroz)', price: 'R$ 26,90 a R$ 39,90' },
+      { name: 'Temalis (arroz por fora, 10 un)', price: 'R$ 29,90 a R$ 36,90' },
+    ],
+  },
+  {
+    title: 'Grelhados & Rechaud',
+    items: [
+      { name: 'Rechaud Tipo I (650g)', price: 'R$ 179,00' },
+      { name: 'Rechaud Tipo II (900g)', price: 'R$ 239,90' },
+      { name: 'Rechaud Tipo III (1100g)', price: 'R$ 249,90' },
+      { name: 'Rechaud Tipo IV (1300g)', price: 'R$ 279,90' },
+      { name: 'Espetos tradicionais', price: 'R$ 10,90 a R$ 13,90', description: 'Alcatra, coração, frango, linguiças, tulipa, kafta' },
+      { name: 'Espetos especiais', price: 'R$ 14,90 a R$ 26,90', description: 'Muçarela de búfala, medalhões, camarão, filet mignon c/ catupiry' },
+      { name: 'Acompanhamentos', price: 'R$ 3,90 a R$ 23,90', description: 'Vinagrete, farofa, arroz, feijão, gohan, legumes, molhos' },
+      { name: 'Tábuas The Garden', price: 'R$ 51,90 / R$ 125,90 / R$ 128,90' },
+    ],
+  },
+  {
+    title: 'Lanches & Pratos',
+    items: [
+      { name: 'Chicken Burger', price: 'R$ 35,00' },
+      { name: 'Cheese Burger', price: 'R$ 39,00' },
+      { name: 'Cheese Salad', price: 'R$ 42,00' },
+      { name: 'Cheese Bacon', price: 'R$ 44,00' },
+      { name: 'Cheese The Garden', price: 'R$ 49,00' },
+      { name: 'Filé mignon à parmegiana', price: 'R$ 69,90' },
+      { name: 'Filé mignon grelhado', price: 'R$ 64,90' },
+      { name: 'Picanha The Garden', price: 'R$ 59,90' },
+      { name: 'Picanha à brasileira', price: 'R$ 54,90' },
+      { name: 'Filé de frango à parmegiana', price: 'R$ 54,90' },
+      { name: 'Frango empanado ou grelhado', price: 'R$ 49,90' },
+      { name: 'Strogonoff de frango', price: 'R$ 49,90' },
+      { name: 'Strogonoff de filé mignon', price: 'R$ 63,90' },
+      { name: 'Camarão do chef', price: 'R$ 129,90' },
+    ],
+  },
+  {
+    title: 'Porções, Yakissoba & Ceviche',
+    items: [
+      { name: 'Camarões Ebi Garden', price: 'R$ 84,90' },
+      { name: 'Coxinhas creme (8 un)', price: 'R$ 44,90' },
+      { name: 'Calabresa acebolada', price: 'R$ 54,90' },
+      { name: 'Bolinho de bacalhau (10 un)', price: 'R$ 47,90' },
+      { name: 'Frango à passarinho', price: 'R$ 54,90' },
+      { name: 'Iscas de peixe', price: 'R$ 49,90' },
+      { name: 'Batata / Mandioca / Polenta frita (grande)', price: 'R$ 42,90' },
+      { name: 'Cebola gigante The Garden', price: 'R$ 59,90' },
+      { name: 'Guiozas (10 un)', price: 'R$ 39,90' },
+      { name: 'Yakissoba', price: 'R$ 89,90 a R$ 119,90', description: 'Legumes, frango, misto, filet mignon ou camarão' },
+      { name: 'Ceviche The Garden (2 pessoas)', price: 'R$ 87,90', description: 'Peixe branco, salmão, atum ou misto' },
+      { name: 'Tepannyaki (2 pessoas)', price: 'R$ 89,90 a R$ 119,90' },
+      { name: 'Saladas família', price: 'R$ 54,90 a R$ 59,90' },
+    ],
+  },
+  {
+    title: 'Bebidas sem álcool & Sobremesas',
+    items: [
+      { name: 'Sucos naturais 500ml', price: 'R$ 11,90 a R$ 21,90' },
+      { name: 'Sucos naturais 750ml', price: 'R$ 24,90 a R$ 39,90' },
+      { name: 'Refrigerantes e águas', price: 'R$ 7,90 a R$ 9,50' },
+      { name: 'Drinks sem álcool', price: 'R$ 26,90' },
+      { name: 'Sodas italianas', price: 'R$ 16,90' },
+      { name: 'Cafés', price: 'R$ 7,90 a R$ 11,90' },
+      { name: 'Espetos doces com chocolate', price: 'R$ 19,90 a R$ 21,90' },
+      { name: 'Taça de sorvete', price: 'R$ 10,90 / R$ 18,90' },
+      { name: 'Abacaxi na brasa', price: 'R$ 21,90' },
+      { name: 'Banana na brasa', price: 'R$ 19,90' },
+      { name: 'Salada de frutas', price: 'R$ 24,90' },
+      { name: 'Petit gateau', price: 'R$ 31,90' },
+      { name: 'Creme de papaia com cassis', price: 'R$ 29,90' },
+      { name: 'Açaí na tigela', price: 'R$ 23,90 / R$ 29,90' },
+    ],
+  },
+  {
+    title: 'Cervejas & Drinks',
+    items: [
+      { name: 'Cervejas 600ml', price: 'R$ 16,90 a R$ 22,90', description: 'Spaten, Corona, Heineken, Amstel, Original, Serra Malte e outras' },
+      { name: 'Long neck e especiais', price: 'R$ 11,90 a R$ 27,90' },
+      { name: 'Smirnoff Ice', price: 'R$ 14,90' },
+      { name: 'Caipirinhas / Sakerita / Caipiroska', price: 'R$ 29,90 a R$ 42,90' },
+      { name: 'Gin tônica', price: 'R$ 29,90 a R$ 41,90' },
+      { name: 'Drinks autorais e clássicos', price: 'R$ 32,90 a R$ 49,90', description: 'Mojito, Negroni, Margarita, Aperol, Moscow Mule, Sangria e mais' },
+    ],
+  },
+  {
+    title: 'Destilados, Whiskies, Vinhos & Espumantes',
+    items: [
+      { name: 'Destilados (dose/garrafa)', price: 'R$ 9,90 a R$ 399,90' },
+      { name: 'Aperitivos e licores', price: 'R$ 13,90 a R$ 39,90' },
+      { name: 'Whiskies (dose/garrafa)', price: 'R$ 19,90 a R$ 499,90' },
+      { name: 'Combos', price: 'R$ 179,90 a R$ 399,90' },
+      { name: 'Vinhos Casillero del Diablo (750ml)', price: 'R$ 119,90' },
+      { name: 'Concha y Toro (750ml)', price: 'R$ 79,90' },
+      { name: 'Pata Negra Oro Tempranillo', price: 'R$ 119,90' },
+      { name: 'Espumantes Salton', price: 'R$ 76,90 a R$ 79,90' },
+      { name: 'Chandon Brut Reserve', price: 'R$ 179,90' },
+    ],
+  },
+  {
+    title: 'Vegetarianos e Veganos',
+    items: [
+      { name: 'Guioza de legumes (10 un)', price: 'R$ 39,90' },
+      { name: 'Onion rings', price: 'R$ 34,90' },
+      { name: 'Shimeji comum / especial', price: 'R$ 37,90 / R$ 44,90' },
+      { name: 'Hot roll shimeji', price: 'R$ 34,90' },
+      { name: 'Pokê vegetariano', price: 'R$ 34,90' },
+      { name: 'Yakissoba de legumes grande', price: 'R$ 83,90' },
+      { name: 'Temaki shimeji e cebolinha', price: 'R$ 27,90' },
+      { name: 'Temaki california sem kani', price: 'R$ 26,90' },
+      { name: 'Hossomaki pepino (10 un)', price: 'R$ 24,90' },
+      { name: 'Salada The Garden família', price: 'R$ 54,90' },
+      { name: 'Legumes e grelhados veganos', price: 'R$ 10,90 a R$ 17,90' },
+    ],
+  },
+];
 
 const spaceGallery = [
   { url: 'https://i.ibb.co/cK9C7zWp/Entrada-2.jpg', category: 'Entrada' },
@@ -122,34 +254,58 @@ const _depoimentos = [
 ];
 
 const locations = {
-  freguesia: {
-    name: 'Freguesia (Jacarepaguá)',
-    address: 'Estr. do Pau-Ferro, 522',
-    phone: '(21) 96489-5330',
-    hours: 'Seg-Qui: 17h-00h | Sex-Sáb: 17h-02h | Dom: 12h-00h',
+  the_garden: {
+    name: 'The Garden - Vila Mariana',
+    address: 'Av. Engenheiro Luís Gomes Cardim Sangirardi, 20 - Vila Mariana, São Paulo - SP, 04112-080',
+    phone: '(11) 5082-2520',
+    description: 'Bar amplo com deque ao ar livre cercado por árvores, oferece um cardápio de pratos brasileiros e japoneses.',
+    serviceOptions: 'Pratos para happy hour · Espaço privativo para eventos · Ótimos coquetéis',
+    serviceHours: [
+      {
+        title: 'Horário de funcionamento',
+        lines: [
+          'terça-feira: 18:00–22:30',
+          'quarta-feira: 18:00–22:30',
+          'quinta-feira: 18:00–23:30',
+          'sexta-feira: 18:00–00:30',
+          'sábado: 12:00–00:30',
+          'domingo: 12:00–22:30',
+          'segunda-feira: Fechado',
+        ],
+      },
+      {
+        title: 'Entrega',
+        lines: [
+          'terça-feira: 18:00–22:30',
+          'quarta-feira: 18:00–22:30',
+          'quinta-feira: 18:00–22:30',
+          'sexta-feira: 12:00–23:00',
+          'sábado: 12:00–23:00',
+          'domingo: 12:00–22:00',
+          'segunda-feira: Fechado',
+        ],
+      },
+      {
+        title: 'Para viagem',
+        lines: [
+          'terça-feira: 18:00–23:00',
+          'quarta-feira: 18:00–23:00',
+          'quinta-feira: 18:00–23:00',
+          'sexta-feira: 12:00–23:00',
+          'sábado: 12:00–23:00',
+          'domingo: 12:00–22:00',
+          'segunda-feira: Fechado',
+        ],
+      },
+    ],
     schedule: {
-      0: [{ start: 12 * 60, end: 24 * 60 }],
-      1: [{ start: 17 * 60, end: 24 * 60 }],
-      2: [{ start: 17 * 60, end: 24 * 60 }],
-      3: [{ start: 17 * 60, end: 24 * 60 }],
-      4: [{ start: 17 * 60, end: 24 * 60 }],
-      5: [{ start: 17 * 60, end: 26 * 60 }],
-      6: [{ start: 17 * 60, end: 26 * 60 }],
-    },
-  },
-  vista_alegre: {
-    name: 'Vista Alegre',
-    address: 'Av. Brás de Pina, 2604',
-    phone: '(21) 96489-5330',
-    hours: 'Seg-Qui: 17h-00h | Sex-Sáb: 17h-02h | Dom: 12h-00h',
-    schedule: {
-      0: [{ start: 12 * 60, end: 24 * 60 }],
-      1: [{ start: 17 * 60, end: 24 * 60 }],
-      2: [{ start: 17 * 60, end: 24 * 60 }],
-      3: [{ start: 17 * 60, end: 24 * 60 }],
-      4: [{ start: 17 * 60, end: 24 * 60 }],
-      5: [{ start: 17 * 60, end: 26 * 60 }],
-      6: [{ start: 17 * 60, end: 26 * 60 }],
+      0: [{ start: 12 * 60, end: 22 * 60 + 30 }],
+      1: [],
+      2: [{ start: 18 * 60, end: 22 * 60 + 30 }],
+      3: [{ start: 18 * 60, end: 22 * 60 + 30 }],
+      4: [{ start: 18 * 60, end: 23 * 60 + 30 }],
+      5: [{ start: 18 * 60, end: 24 * 60 + 30 }],
+      6: [{ start: 12 * 60, end: 24 * 60 + 30 }],
     },
   },
 };
@@ -245,7 +401,7 @@ const Carousel = ({ title, subtitle, images }) => {
 const App = () => {
   const [currentPage, setCurrentPage] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeLocation, setActiveLocation] = useState('freguesia');
+  const [activeLocation, setActiveLocation] = useState('the_garden');
   const [scrolled, setScrolled] = useState(false);
 
   const [isChatActive, setIsChatActive] = useState(false);
@@ -258,6 +414,7 @@ const App = () => {
   const [text, setText] = useState('');
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const isInternalPage = currentPage !== 'home';
 
   const locationStatus = useMemo(
     () => Object.fromEntries(Object.entries(locations).map(([key, location]) => [key, isLocationOpenNow(location.schedule)])),
@@ -348,6 +505,16 @@ const App = () => {
   const getWhatsAppLink = (msg) =>
     `https://wa.me/55${locations[activeLocation].phone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`;
 
+  const goToHomeSection = (sectionId) => {
+    setCurrentPage('home');
+    requestAnimationFrame(() => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  };
+
   const navLinks = [
     {
       label: 'Início',
@@ -356,8 +523,17 @@ const App = () => {
         window.scrollTo(0, 0);
       },
     },
-    { label: 'Cardápio', href: '#menu' },
-    { label: 'Eventos', href: '#eventos' },
+    {
+      label: 'Cardápio',
+      action: () => {
+        setCurrentPage('menu');
+        window.scrollTo(0, 0);
+      },
+    },
+    {
+      label: 'Eventos',
+      action: () => goToHomeSection('eventos'),
+    },
     {
       label: 'Galeria',
       action: () => {
@@ -365,7 +541,10 @@ const App = () => {
         window.scrollTo(0, 0);
       },
     },
-    { label: 'Unidades', href: '#unidades' },
+    {
+      label: 'Unidades',
+      action: () => goToHomeSection('unidades'),
+    },
   ];
 
   return (
@@ -413,16 +592,16 @@ const App = () => {
         </button>
       </div>
 
-      <nav className={`fixed w-full z-[100] transition-all duration-700 ${scrolled ? 'bg-black/90 backdrop-blur-xl py-2 border-b border-white/5' : 'bg-transparent py-8'}`}>
+      <nav className={`fixed w-full z-[100] transition-all duration-700 ${(scrolled || isInternalPage) ? 'bg-black/90 backdrop-blur-xl py-2 border-b border-white/5' : 'bg-transparent py-8'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
           <div className="flex items-center cursor-pointer" onClick={() => setCurrentPage('home')}>
-            <img src={LOGO_URL} alt="The Garden Logo" className={`object-contain transition-all duration-700 hover:scale-110 drop-shadow-[0_0_20px_rgba(255,255,255,0.15)] ${scrolled ? 'h-14 md:h-20' : 'h-20 md:h-32'}`} />
+            <img src={LOGO_URL} alt="The Garden Logo" className={`object-contain transition-all duration-700 hover:scale-110 drop-shadow-[0_0_20px_rgba(255,255,255,0.15)] ${(scrolled || isInternalPage) ? 'h-14 md:h-20' : 'h-20 md:h-32'}`} />
           </div>
           <div className="hidden lg:flex space-x-10 items-center font-semibold text-xs tracking-widest uppercase text-white/70">
             {navLinks.map((link, i) => (
               <a key={i} href={link.href || '#'} onClick={(e) => { if (link.action) { e.preventDefault(); link.action(); } }} className="hover:text-green-400 transition-colors">{link.label}</a>
             ))}
-            <button className="cursor-pointer bg-green-600 hover:bg-green-500 text-white px-8 py-3 rounded-full transition-all text-[10px] font-black tracking-widest shadow-lg shadow-green-900/40">RESERVAS</button>
+            <a href={RESERVAS_URL} target="_blank" rel="noopener noreferrer" className="cursor-pointer bg-green-600 hover:bg-green-500 text-white px-8 py-3 rounded-full transition-all text-[10px] font-black tracking-widest shadow-lg shadow-green-900/40">RESERVAS</a>
           </div>
           <button className="cursor-pointer lg:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>{isMenuOpen ? <X size={32} /> : <MenuIcon size={32} />}</button>
         </div>
@@ -432,9 +611,23 @@ const App = () => {
         <div className="fixed inset-0 z-[110] bg-black flex flex-col items-center justify-center space-y-10 text-3xl font-black tracking-tighter">
           <button className="cursor-pointer absolute top-8 right-8" onClick={() => setIsMenuOpen(false)}><X size={40} /></button>
           {navLinks.map((link, i) => (
-            <a key={i} href={link.href || '#'} onClick={() => { setIsMenuOpen(false); if (link.action) link.action(); }}>{link.label}</a>
+            <a
+              key={i}
+              href={link.href || '#'}
+              onClick={(e) => {
+                if (link.action) {
+                  e.preventDefault();
+                }
+                setIsMenuOpen(false);
+                if (link.action) {
+                  link.action();
+                }
+              }}
+            >
+              {link.label}
+            </a>
           ))}
-          <button className="cursor-pointer bg-green-600 text-white px-12 py-4 rounded-full text-xl">RESERVAR</button>
+          <a href={RESERVAS_URL} target="_blank" rel="noopener noreferrer" className="cursor-pointer bg-green-600 text-white px-12 py-4 rounded-full text-xl">RESERVAR</a>
         </div>
       )}
 
@@ -457,13 +650,13 @@ const App = () => {
                 <br /> em um só lugar.
               </h1>
               <div className="flex flex-col sm:flex-row justify-center gap-6 mt-8">
-                <a href="#menu" className="bg-green-600 text-white px-12 py-5 rounded-full font-black text-lg hover:bg-green-500 transition-all shadow-2xl flex items-center group">CARDÁPIO <ChevronRight className="ml-2 group-hover:translate-x-1" /></a>
+                <button onClick={() => { setCurrentPage('menu'); window.scrollTo(0, 0); }} className="cursor-pointer bg-green-600 text-white px-12 py-5 rounded-full font-black text-lg hover:bg-green-500 transition-all shadow-2xl flex items-center group">CARDÁPIO <ChevronRight className="ml-2 group-hover:translate-x-1" /></button>
                 <button onClick={() => setCurrentPage('gallery')} className="cursor-pointer bg-white/5 hover:bg-white/10 border border-white/10 px-12 py-5 rounded-full font-black text-lg transition-all flex items-center group">GALERIA <Camera className="ml-2 w-5 h-5" /></button>
               </div>
             </div>
           </section>
 
-          <section id="menu" className="py-16 md:py-32 container mx-auto px-6">
+          <section className="py-16 md:py-32 container mx-auto px-6">
             <div className="mb-10 md:mb-20">
               <h2 className="text-green-500 font-black tracking-widest text-sm mb-4 uppercase">Mix Gastronômico</h2>
               <h3 className="text-5xl md:text-7xl font-black text-white leading-none">Do Oriente à <br /> Brasa Carioca.</h3>
@@ -537,8 +730,8 @@ const App = () => {
 
           <section id="unidades" className="py-32 bg-[#050505]">
             <div className="container mx-auto px-6">
-              <h3 className="text-5xl font-black text-white text-center mb-20">Nossas Unidades</h3>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+              <h3 className="text-5xl font-black text-white text-center mb-20">Informações da Casa</h3>
+              <div className="grid grid-cols-1 gap-10">
                 {Object.entries(locations).map(([key, loc]) => (
                   <div key={key} onClick={() => setActiveLocation(key)} className={`p-12 rounded-[50px] border transition-all cursor-pointer ${activeLocation === key ? 'bg-green-800/40 border-green-500 shadow-2xl' : 'bg-white/5 border-white/5 hover:border-white/20'}`}>
                     <div className="flex justify-between items-start mb-10">
@@ -548,16 +741,48 @@ const App = () => {
                       </div>
                     </div>
                     <h4 className="text-4xl font-black mb-6 text-white">{loc.name}</h4>
-                    <div className="space-y-4 opacity-80 mb-12 font-medium">
-                      <p>{loc.address}</p><p>{loc.hours}</p>
+                    <div className="space-y-4 opacity-80 mb-10 font-medium">
+                      <p><span className="text-white font-bold">Endereço:</span> {loc.address}</p>
+                      <p><span className="text-white font-bold">Telefone:</span> {loc.phone}</p>
+                      <p><span className="text-white font-bold">Funcionamento:</span> Ter-Qua 18:00–22:30 · Qui 18:00–23:30 · Sex 18:00–00:30 · Sáb 12:00–00:30 · Dom 12:00–22:30 · Seg fechado</p>
                     </div>
-                    <button className={`cursor-pointer w-full py-4 rounded-full font-black uppercase text-sm transition-all ${activeLocation === key ? 'bg-white text-green-700' : 'bg-green-600 text-white'}`}>Reservar Mesa</button>
+                    <a href={RESERVAS_URL} target="_blank" rel="noopener noreferrer" className={`cursor-pointer w-full py-4 rounded-full font-black uppercase text-sm transition-all text-center block ${activeLocation === key ? 'bg-white text-green-700' : 'bg-green-600 text-white'}`}>Reservar Mesa</a>
                   </div>
                 ))}
               </div>
             </div>
           </section>
         </>
+      ) : currentPage === 'menu' ? (
+        <section id="menu" className="pt-40 md:pt-44 pb-20 md:pb-28 min-h-screen container mx-auto px-6">
+          <div className="mb-8 md:mb-16 max-w-3xl">
+            <h2 className="text-green-500 font-black tracking-widest text-sm mb-4 uppercase">Cardápio</h2>
+            <h3 className="text-3xl sm:text-4xl md:text-6xl font-black text-white leading-[1.05]">Nossos Pratos <br /> e Bebidas.</h3>
+          </div>
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 md:gap-7">
+            {menuSections.map((section) => (
+              <div key={section.title} className="rounded-[24px] md:rounded-[28px] border border-white/10 bg-white/5 p-5 md:p-7">
+                <h4 className="text-xl md:text-2xl font-black text-white mb-5">{section.title}</h4>
+                <ul className="space-y-3">
+                  {section.items.map((item) => (
+                    <li key={`${section.title}-${item.name}`} className="pb-3 border-b border-white/10 last:border-b-0 last:pb-0">
+                      <div className="flex items-start justify-between gap-3">
+                        <p className="text-stone-100 font-semibold leading-snug text-[15px] md:text-base flex-1">{item.name}</p>
+                        <span className="text-green-400 font-black whitespace-nowrap text-sm md:text-base">{item.price}</span>
+                      </div>
+                      {item.description && <p className="text-stone-400 text-sm mt-1">{item.description}</p>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 flex justify-end">
+            <a href={MENU_URL} target="_blank" rel="noopener noreferrer" className="bg-green-600 text-white px-8 py-3 rounded-full font-black text-xs tracking-widest uppercase hover:bg-green-500 transition-all">
+              Ver PDF completo
+            </a>
+          </div>
+        </section>
       ) : (
         <section className="pt-32 pb-32 min-h-screen">
           <div className="container mx-auto px-6 mb-24 text-center">
@@ -578,13 +803,15 @@ const App = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mb-20 text-center md:text-left">
             <div className="space-y-8 flex flex-col items-center md:items-start">
               <img src={LOGO_URL} alt="Logo" className="h-28 md:h-40 object-contain drop-shadow-[0_10px_30px_rgba(255,255,255,0.1)] hover:scale-105 transition-transform" />
-              <p className="text-stone-500 text-sm max-w-xs">O encontro perfeito entre a gastronomia fusion e a vida noturna carioca.</p>
+              <p className="text-stone-500 text-sm max-w-xs">Bar amplo com deque ao ar livre cercado por árvores, com pratos brasileiros e japoneses.</p>
             </div>
             <div className="space-y-8 text-sm pt-4">
               <h5 className="font-black text-white uppercase tracking-widest border-l-2 border-green-600 pl-4">Contatos</h5>
               <ul className="space-y-4 text-stone-500 font-medium">
-                <li className="flex items-center justify-center md:justify-start"><Phone size={14} className="mr-3 text-green-500" /> (21) 96489-5330</li>
-                <li className="flex items-center justify-center md:justify-start"><MapPin size={14} className="mr-3 text-green-500" /> Jacarepaguá & Vista Alegre</li>
+                <li className="flex items-center justify-center md:justify-start"><Phone size={14} className="mr-3 text-green-500" /> (11) 5082-2520</li>
+                <li className="flex items-center justify-center md:justify-start"><MapPin size={14} className="mr-3 text-green-500" /> Vila Mariana, São Paulo - SP</li>
+                <li className="flex items-center justify-center md:justify-start"><Clock size={14} className="mr-3 text-green-500" /> terça a domingo (segunda fechado)</li>
+                <li className="flex items-center justify-center md:justify-start"><a href={MENU_URL} target="_blank" rel="noopener noreferrer" className="text-green-300 hover:text-green-200">Menu</a></li>
               </ul>
             </div>
             <div className="space-y-8 text-sm pt-4">
